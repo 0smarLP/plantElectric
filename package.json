@@ -20,7 +20,10 @@
     },
     "dependencies": {
         "datatables.net": "^2.0.3",
+        "datatables.net-bs5": "^2.0.3",
         "datatables.net-dt": "^2.0.3",
-        "datatables.net-vue3": "^3.0.1"
+        "datatables.net-select-bs5": "^2.0.0",
+        "datatables.net-vue3": "^3.0.1",
+        "sweetalert2": "^11.10.7"
     }
 }
