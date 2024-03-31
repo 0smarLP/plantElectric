@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
 use Illuminate\Http\Request;
+use App\Models\Room;
 use Inertia\Inertia;
 
 class RoomController extends Controller
@@ -13,7 +13,11 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Room/Index');
+        $rooms = Room::all();
+
+        return Inertia::render('Room/Index', [
+            'data' => $rooms,
+        ]);
     }
 
     /**
@@ -21,7 +25,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Room/Create');
     }
 
     /**
@@ -29,7 +33,14 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        Room::create($request->all());
+
+        return redirect()->route('cuartos-electricos.index');
     }
 
     /**
@@ -37,7 +48,11 @@ class RoomController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $room = Room::find($id);
+
+        return Inertia::render('Room/Show', [
+            'data' => $room,
+        ]);
     }
 
     /**
@@ -45,7 +60,11 @@ class RoomController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $room = Room::find($id);
+
+        return Inertia::render('Room/Edit', [
+            'data' => $room,
+        ]);
     }
 
     /**
@@ -53,7 +72,15 @@ class RoomController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        $room = Room::find($id);
+        $room->update($request->all());
+
+        return redirect()->route('cuartos-electricos.index');
     }
 
     /**
@@ -61,6 +88,9 @@ class RoomController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $room = Room::find($id);
+        $room->delete();
+
+        return redirect()->route('cuartos-electricos.index');
     }
 }
